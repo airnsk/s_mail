@@ -18,7 +18,7 @@
 
 (defn template-page []
   [:div
-    [:button {:class "waves-effect waves-light btn blue"} "test"]
+    [:button {:class "waves-effect waves-light btn green"} "test"]
          ] )
 
 (defn login-page []
