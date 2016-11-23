@@ -17,8 +17,10 @@
   [:meta {:charset "utf-8"}]
   [:meta {:name "viewport"
           :content "width=device-width, initial-scale=1"}]
-  (include-css (if (env :dev) "/css/site.css" "/css/site.min.css"))
-  (include-css (if (env :dev) "/materialize/css/materialize.css" "/materialize/css/materialize.min.css"))
+          (include-css "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700"
+                          "css/material.indigo-pink.min.css"
+                          "https://fonts.googleapis.com/icon?family=Material+Icons"
+                          (if (env :dev) "css/site.css" "css/site.min.css"))
   ])
 
 (defn loading-page []
@@ -26,8 +28,7 @@
    (head)
    [:body {:class "body-container"}
     mount-target
-    (include-js "https://code.jquery.com/jquery-2.1.4.min.js")
-    (include-js "/materialize/js/materialize.min.js")
+
     (include-js (if (env :dev) "/js/app.js" "/jsprod/app.js"))
 
 
