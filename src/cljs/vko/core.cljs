@@ -1,12 +1,12 @@
 (ns vko.core
     (:require
-
+              [cljsjs.material]
               [reagent.core :as reagent :refer [atom]]
               [reagent.session :as session]
               [secretary.core :as secretary :include-macros true]
               [accountant.core :as accountant]
               [cljs.core.async :refer (chan put! <!)]
-
+              [vko.util :as util]
               ))
 
 ;; -------------------------
@@ -18,8 +18,13 @@
 
 (defn template-page []
   [:div
-    [:button {:class "waves-effect waves-light btn green"} "test"]
-         ] )
+
+
+
+
+
+
+     ] )
 
 (defn login-page []
  [:div [:h2 "please login"]
@@ -34,11 +39,18 @@
 
 (defn home-page []
   [:div [:h2 "Welcome to vko111177"]
+
+[:button {:class "waves-effect waves-light btn red"} "test"]
+
    [:div [:a {:href "/about"} "go to about page"]]
    [:div [:a {:href "/list"} "go to list page"]]])
 
 (defn about-page []
   [:div [:h2 "About vko1"]
+
+
+[:button {:class "waves-effect waves-light btn green"} "test"]
+
    [:div [:a {:href "/"} "go to the home page"]]])
 
 (defn list-mail-page []
@@ -87,3 +99,4 @@
        (secretary/locate-route path))})
   (accountant/dispatch-current!)
   (mount-root))
+(util/start-upgrading)

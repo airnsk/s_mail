@@ -13,26 +13,26 @@
        " in order to start the compiler"]])
 
 (defn head []
-  [:head
-   [:meta {:charset "utf-8"}]
-   [:meta {:name "viewport"
-           :content "width=device-width, initial-scale=1"}]
-   (include-css (if (env :dev) "/css/site.css" "/css/site.min.css"))
-   (include-css (if (env :dev) "/materialize/css/materialize.css" "/materialize/css/materialize.min.css"))
-   ])
+ [:head
+  [:meta {:charset "utf-8"}]
+  [:meta {:name "viewport"
+          :content "width=device-width, initial-scale=1"}]
+  (include-css (if (env :dev) "/css/site.css" "/css/site.min.css"))
+  (include-css (if (env :dev) "/materialize/css/materialize.css" "/materialize/css/materialize.min.css"))
+  ])
 
 (defn loading-page []
-  (html5
-    (head)
-    [:body {:class "body-container"}
-     mount-target
-     (include-js "https://code.jquery.com/jquery-2.1.4.min.js")
-     (include-js "/materialize/js/materialize.min.js")
-     (include-js (if (env :dev) "/js/app.js" "/jsprod/app.js"))
+ (html5
+   (head)
+   [:body {:class "body-container"}
+    mount-target
+    (include-js "https://code.jquery.com/jquery-2.1.4.min.js")
+    (include-js "/materialize/js/materialize.min.js")
+    (include-js (if (env :dev) "/js/app.js" "/jsprod/app.js"))
 
 
 
-     ]))
+    ]))
 
 (defn cards-page []
   (html5
