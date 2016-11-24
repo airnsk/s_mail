@@ -25,10 +25,11 @@
 
   [ui/mui-theme-provider
    {:mui-theme (get-mui-theme
-                 {:palette {:text-color (color :green600)}})}
+                 {:palette {:text-color (color :green600)
+                          :primary1-color (color :deep-orange-a100) }})}
    [:div
-    [ui/app-bar {:title "Title"
-                  :icon-element-right
+    [ui/app-bar {:title "Название"
+                  :icon-element-righ
                    (reagent/as-element [ui/icon-button
                                     (ic/action-account-balance-wallet)])}]
     [ui/paper
@@ -61,7 +62,10 @@
 (defn home-page []
   [:div [:h2 "Welcome to vko111177"]
 
-
+  [ui/mui-theme-provider
+   {:mui-theme (get-mui-theme {:palette {:text-color (color :blue200)
+                                          :primary1-color (color :deep-orange-a100) }})}
+   [ui/raised-button {:label "Blue button" :primary true} ]]
 
    [:div [:a {:href "/about"} "go to about page"]]
    [:div [:a {:href "/list"} "go to list page"]]])
@@ -69,7 +73,9 @@
 (defn about-page []
   [:div [:h2 "About vko1"]
 
-
+  [ui/mui-theme-provider
+   {:mui-theme (get-mui-theme {:palette {:text-color (color :blue200)}})}
+   [ui/raised-button {:label "Blue button"}]]
 
 
    [:div [:a {:href "/"} "go to the home page"]]])
