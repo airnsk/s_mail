@@ -6,7 +6,7 @@
 
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [ring-server "0.4.0"]
-                 [reagent-material-ui "0.2.1"]
+                 [reagent-material-ui "0.2.3"]
                  [reagent "0.6.0" :exclusions [cljsjs/react]]
                  [reagent-forms "0.5.25"]
                  [reagent-utils "0.2.0"]
