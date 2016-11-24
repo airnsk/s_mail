@@ -17,9 +17,7 @@
   [:meta {:charset "utf-8"}]
   [:meta {:name "viewport"
           :content "width=device-width, initial-scale=1"}]
-          (include-css "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700"
-                          "css/material.indigo-pink.min.css"
-                          "https://fonts.googleapis.com/icon?family=Material+Icons"
+          (include-css 
                           (if (env :dev) "css/site.css" "css/site.min.css"))
   ])
 

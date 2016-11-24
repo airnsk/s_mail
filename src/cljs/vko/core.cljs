@@ -1,6 +1,6 @@
 (ns vko.core
     (:require
-              [cljsjs.material]
+              [reagent-material-ui.core :refer [AppBar Card RaisedButton]]
               [reagent.core :as reagent :refer [atom]]
               [reagent.session :as session]
               [secretary.core :as secretary :include-macros true]
@@ -13,43 +13,6 @@
 ;; Views
 
 
-(defn side-nav []
-  [:div.mdl-layout.mdl-js-layout.mdl-layout--fixed-header
-  [:header.mdl-layout__header
-  [:div.mdl-layout__header-row
-   [:span.mdl-layout-title "title"]
-   [:div.mdl-layout-spacer]
-   [:nav.mdl-navigation.mdl-layout--large-screen-only
-    [:a.mdl-navigation__link {:href "#/"} "Main page"]
-    [:a.mdl-navigation__link {:href "#/about"} "About"]
-    [:a.mdl-navigation__link {:href "#/settings"} "Settings"]]]]
-
-    [:div.mdl-layout__drawer
-    [:span.mdl-layout-title "titel2" ]
-    [:nav.mdl-navigation
-     [:a.mdl-navigation__link {:href "#/"} "Main page"]
-     [:a.mdl-navigation__link {:href "#/about"} "About"]
-     [:a.mdl-navigation__link {:href "#/settings"} "Settings"]]
-
-
-    ]
-    ])
-
-
-    (defn search-bar []
-      [:form
-       {:action "#"}
-       [:div.mdl-textfield.mdl-js-textfield.mdl-textfield--expandable
-        [:label.mdl-button.mdl-js-button.mdl-button--icon
-         {:for "search"}
-         [:i.material-icons
-          "search"]]
-        [:div.mdl-textfield__expandable-holder
-         [:input#search.mdl-textfield__input
-          {:type "text"}]
-         [:label.mdl-textfield__label
-          {:for "sample-expandable"}
-          "Expandable Input"]]]])
 
 
 (def userauth (atom true))
@@ -58,12 +21,10 @@
   [:div
 
 
-  [:button.fixed-bottom-fab.mdl-button.mdl-js-button.mdl-button--fab.mdl-js-ripple-effect.mdl-button--colored
-      [:i.material-icons "add"]]
+[RaisedButton {:label "test" :primary true}]
 
 
-(side-nav)
-(search-bar)
+
 
 
      ] )
@@ -141,4 +102,3 @@
        (secretary/locate-route path))})
   (accountant/dispatch-current!)
   (mount-root))
-(util/start-upgrading)

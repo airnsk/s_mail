@@ -6,8 +6,8 @@
 
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [ring-server "0.4.0"]
-
-                 [reagent "0.6.0" ]
+                 [reagent-material-ui "0.2.1"]
+                 [reagent "0.6.0" :exclusions [cljsjs/react]]
                  [reagent-forms "0.5.25"]
                  [reagent-utils "0.2.0"]
                  [ring "1.5.0"]
@@ -50,7 +50,7 @@
 
   :cljsbuild
   {:builds {:min
-            {:source-paths ["src/cljs" "src/cljc" "env/prod/cljs"]
+            {:source-paths ["src/cljs"  "src/cljc" "env/prod/cljs"]
 
              :compiler
              {:output-to "target/cljsbuild/public/jsprod/app.js"
@@ -58,7 +58,7 @@
               :optimizations :advanced
               :pretty-print  false}}
             :app
-            {:source-paths ["src/cljs" "src/cljc" "env/dev/cljs"]
+            {:source-paths ["src/cljs"  "src/cljc" "env/dev/cljs"]
              :compiler
              {:main "vko.dev"
               :asset-path "/js/out"
@@ -70,7 +70,7 @@
 
 
             :devcards
-            {:source-paths ["src/cljs" "src/cljc" "env/dev/cljs"]
+            {:source-paths ["src/cljs" "src/cljc"  "env/dev/cljs"]
              :figwheel {:devcards true}
              :compiler {:main "vko.cards"
                         :asset-path "js/devcards_out"
@@ -102,7 +102,7 @@
                                   [figwheel-sidecar "0.5.7"]
                                   [org.clojure/tools.nrepl "0.2.12"]
                                   [com.cemerick/piggieback "0.2.2-SNAPSHOT"]
-                                  [devcards "0.2.1-7" ]
+                                  [devcards "0.2.1-7" :exclusions [cljsjs/react]]
                                   [pjstadig/humane-test-output "0.8.1"]
                                   ]
 
