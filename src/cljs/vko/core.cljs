@@ -15,6 +15,28 @@
 ;; -------------------------
 ;; Views
 
+(comment (
+
+  primary1Color cyan500,
+  primary2Color cyan700,
+  primary3Color grey400,
+  accent1Color pinkA200,
+  accent2Color grey100,
+  accent3Color grey500,
+  textColor darkBlack,
+  secondaryTextColor fade(darkBlack, 0.54),
+  alternateTextColor white,
+  canvasColor white,
+  borderColor grey300,
+  disabledColor fade(darkBlack, 0.3),
+  pickerHeaderColor cyan500,
+  clockCircleColor fade(darkBlack, 0.07),
+  shadowColor fullBlack)
+
+  )
+
+
+
 
 
 
@@ -26,7 +48,8 @@
   [ui/mui-theme-provider
    {:mui-theme (get-mui-theme
                  {:palette {:text-color (color :green600)
-                          :primary1-color (color :deep-orange-a100) }})}
+                          :primary1-color (color :pinkA200)
+                          :accent1-color (color :green600) }})}
    [:div
     [ui/app-bar {:title "Название"
                   :icon-element-righ
@@ -40,6 +63,7 @@
      (ic/action-home {:color (color :grey600)})
      [ui/raised-button {:label        "Click me"
                          :icon         (ic/social-group)
+                         :secondary true
                          :on-touch-tap #(println "clicked")}]]]]
 
 
@@ -64,8 +88,9 @@
 
   [ui/mui-theme-provider
    {:mui-theme (get-mui-theme {:palette {:text-color (color :blue200)
-                                          :primary1-color (color :deep-orange-a100) }})}
-   [ui/raised-button {:label "Blue button" :primary true} ]]
+                                          :primary1-color (color :deep-orange-a100)
+                                          :secondary1-color (color :blue200) }})}
+   [ui/raised-button {:label "Blue button" :secondary true} ]]
 
    [:div [:a {:href "/about"} "go to about page"]]
    [:div [:a {:href "/list"} "go to list page"]]])
