@@ -1,6 +1,9 @@
 (ns vko.core
     (:require
-              [reagent-material-ui.core :refer [AppBar Card RaisedButton]]
+              [cljsjs.material-ui]
+              [cljs-react-material-ui.core :refer [get-mui-theme color]]
+              [cljs-react-material-ui.reagent :as ui]
+              [cljs-react-material-ui.icons :as ic]
               [reagent.core :as reagent :refer [atom]]
               [reagent.session :as session]
               [secretary.core :as secretary :include-macros true]
@@ -20,8 +23,23 @@
 (defn template-page []
   [:div
 
-
-[RaisedButton {:label "test" :primary true}]
+  [ui/mui-theme-provider
+   {:mui-theme (get-mui-theme
+                 {:palette {:text-color (color :green600)}})}
+   [:div
+    [ui/app-bar {:title "Title"
+                  :icon-element-right
+                   (reagent/as-element [ui/icon-button
+                                    (ic/action-account-balance-wallet)])}]
+    [ui/paper
+     [:div "Hello"]
+     [ui/mui-theme-provider
+      {:mui-theme (get-mui-theme {:palette {:text-color (color :blue200)}})}
+      [ui/raised-button {:label "Blue button"}]]
+     (ic/action-home {:color (color :grey600)})
+     [ui/raised-button {:label        "Click me"
+                         :icon         (ic/social-group)
+                         :on-touch-tap #(println "clicked")}]]]]
 
 
 
@@ -43,7 +61,7 @@
 (defn home-page []
   [:div [:h2 "Welcome to vko111177"]
 
-[:button {:class "waves-effect waves-light btn red"} "test"]
+
 
    [:div [:a {:href "/about"} "go to about page"]]
    [:div [:a {:href "/list"} "go to list page"]]])
@@ -52,7 +70,7 @@
   [:div [:h2 "About vko1"]
 
 
-[:button {:class "waves-effect waves-light btn green"} "test"]
+
 
    [:div [:a {:href "/"} "go to the home page"]]])
 
