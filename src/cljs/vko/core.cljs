@@ -1,7 +1,5 @@
 (ns vko.core
     (:require
-
-              [hiccups.runtime :as h]
               [cljsjs.material-ui]
               [cljs-react-material-ui.core :refer [get-mui-theme color]]
               [cljs-react-material-ui.reagent :as ui]
@@ -12,13 +10,7 @@
               [accountant.core :as accountant]
               [cljs.core.async :refer (chan put! <!)]
               [vko.util :as util]
-              )
-
-
-              (:require-macros [hiccups.core :refer [html]]
-                                 )
-
-              )
+              ))
 
 ;; -------------------------
 ;; Views
@@ -42,78 +34,13 @@
   shadowColor fullBlack)
 
   )
-(def labelb (atom "1111111"))
-  (defn home-page []
-    [:div [:h2 "Welcome to vko111177"]
-
-    [ui/mui-theme-provider
-     {:mui-theme (get-mui-theme {:palette {:text-color (color :blue200)
-                                            :primary1-color (color :deep-orange-a100)
-                                            :secondary1-color (color :blue200) }})}
-     [ui/raised-button {:label @labelb :secondary true
-                        :on-touch-tap #(reset! labelb "55555555")} ]]
-
-     [:div [:a {:href "/about"} "go to about page"]]
-     [:div [:a {:href "/list"} "go to list page"]]])
-
-
-  (defn mount-root2 [d]
-    (reagent/render [home-page] (.getElementById d "app2")))
-
-  (defn init2! [d]
-    (accountant/configure-navigation!
-      {:nav-handler
-       (fn [path]
-         (secretary/dispatch! path))
-       :path-exists?
-       (fn [path]
-         (secretary/locate-route path))})
-    (accountant/dispatch-current!)
-    (mount-root2 d))
-
-  (def userauth (atom true))
-
-
-
-  (defonce deb-data (reagent/atom {:w-c true
-                             :event-data ""}))
-
-
-
-(defn debugger-page [src]
- [:html
-  [:head
-   [:title "re-frisk debugger"]
-   [:meta {:charset "UTF-8"}]
-   [:meta
-    {:content "width=device-width, initial-scale=1", :name "viewport"}]]
-  [:body {:style "margin:0px;padding:0px"}
-
-
-   [:div#app2 {:style "height:100%;width:100%"}
-    [:h2 "re-frisk debugger"]
-    [:p "ENJOY!"]]]
-
-  [:script {:type "text/javascript", :src src}]])
-
-(defn opendebug []
-
-  (let [w (js/window.open "" "Debugger" "width=800,height=400,resizable=yes,scrollbars=yes,status=no,directories=no,toolbar=no,menubar=no")
-          d (.-document w)]
-
-      (.open d)
-      (.write d (html (debugger-page (:p @userauth))))
-      (init2! d)
-))
 
 
 
 
 
 
-
-
-
+(def userauth (atom true))
 
 (defn template-page []
   [:div
@@ -163,10 +90,10 @@
      {:mui-theme (get-mui-theme {:palette {:text-color (color :blue200)}})}
      [ui/raised-button {:label "Blue button"}]]
     (ic/action-home {:color (color :grey600)})
-    [ui/raised-button {:label        "open window"
+    [ui/raised-button {:label        "Click me"
                         :icon         (ic/social-group)
                         :secondary true
-                        :on-touch-tap #(opendebug)}]
+                        :on-touch-tap #(println "clicked")}]
 
 
     ]]
@@ -188,7 +115,17 @@
  )
 
 
+(defn home-page []
+  [:div [:h2 "Welcome to vko111177"]
 
+  [ui/mui-theme-provider
+   {:mui-theme (get-mui-theme {:palette {:text-color (color :blue200)
+                                          :primary1-color (color :deep-orange-a100)
+                                          :secondary1-color (color :blue200) }})}
+   [ui/raised-button {:label "Blue button" :secondary true} ]]
+
+   [:div [:a {:href "/about"} "go to about page"]]
+   [:div [:a {:href "/list"} "go to list page"]]])
 
 (defn about-page []
   [:div [:h2 "About vko1"]
@@ -235,9 +172,6 @@
 
 (defn mount-root []
   (reagent/render [current-page] (.getElementById js/document "app")))
-
-
-
 
 (defn init! []
   (accountant/configure-navigation!
