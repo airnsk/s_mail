@@ -1,5 +1,7 @@
 (ns vko.core
     (:require
+
+              [hiccups.runtime :as h]
               [cljsjs.material-ui]
               [cljs-react-material-ui.core :refer [get-mui-theme color]]
               [cljs-react-material-ui.reagent :as ui]
@@ -10,7 +12,13 @@
               [accountant.core :as accountant]
               [cljs.core.async :refer (chan put! <!)]
               [vko.util :as util]
-              ))
+              )
+
+
+              (:require-macros [hiccups.core :refer [html]]
+                                 )
+
+              )
 
 ;; -------------------------
 ;; Views
@@ -34,37 +42,134 @@
   shadowColor fullBlack)
 
   )
+(def labelb (atom "1111111"))
+  (defn home-page []
+    [:div [:h2 "Welcome to vko111177"]
+
+    [ui/mui-theme-provider
+     {:mui-theme (get-mui-theme {:palette {:text-color (color :blue200)
+                                            :primary1-color (color :deep-orange-a100)
+                                            :secondary1-color (color :blue200) }})}
+     [ui/raised-button {:label @labelb :secondary true
+                        :on-touch-tap #(reset! labelb "55555555")} ]]
+
+     [:div [:a {:href "/about"} "go to about page"]]
+     [:div [:a {:href "/list"} "go to list page"]]])
+
+
+  (defn mount-root2 [d]
+    (reagent/render [home-page] (.getElementById d "app2")))
+
+  (defn init2! [d]
+    (accountant/configure-navigation!
+      {:nav-handler
+       (fn [path]
+         (secretary/dispatch! path))
+       :path-exists?
+       (fn [path]
+         (secretary/locate-route path))})
+    (accountant/dispatch-current!)
+    (mount-root2 d))
+
+  (def userauth (atom true))
+
+
+
+  (defonce deb-data (reagent/atom {:w-c true
+                             :event-data ""}))
+
+
+
+(defn debugger-page [src]
+ [:html
+  [:head
+   [:title "re-frisk debugger"]
+   [:meta {:charset "UTF-8"}]
+   [:meta
+    {:content "width=device-width, initial-scale=1", :name "viewport"}]]
+  [:body {:style "margin:0px;padding:0px"}
+
+
+   [:div#app2 {:style "height:100%;width:100%"}
+    [:h2 "re-frisk debugger"]
+    [:p "ENJOY!"]]]
+
+  [:script {:type "text/javascript", :src src}]])
+
+(defn opendebug []
+
+  (let [w (js/window.open "" "Debugger" "width=800,height=400,resizable=yes,scrollbars=yes,status=no,directories=no,toolbar=no,menubar=no")
+          d (.-document w)]
+
+      (.open d)
+      (.write d (html (debugger-page (:p @userauth))))
+      (init2! d)
+))
 
 
 
 
 
 
-(def userauth (atom true))
+
+
+
 
 (defn template-page []
   [:div
 
   [ui/mui-theme-provider
    {:mui-theme (get-mui-theme
-                 {:palette {:text-color (color :green600)
+                 {:palette {:text-color (color :black)
                           :primary1-color (color :pinkA200)
                           :accent1-color (color :green600) }})}
    [:div
-    [ui/app-bar {:title "Название"
-                  :icon-element-righ
+    [ui/app-bar {:title "ПОЧТА" :style {:margin-bottom 15}
+                  :icon-element-right
                    (reagent/as-element [ui/icon-button
-                                    (ic/action-account-balance-wallet)])}]
-    [ui/paper
-     [:div "Hello"]
-     [ui/mui-theme-provider
-      {:mui-theme (get-mui-theme {:palette {:text-color (color :blue200)}})}
-      [ui/raised-button {:label "Blue button"}]]
-     (ic/action-home {:color (color :grey600)})
-     [ui/raised-button {:label        "Click me"
-                         :icon         (ic/social-group)
-                         :secondary true
-                         :on-touch-tap #(println "clicked")}]]]]
+                                    (ic/action-account-balance-wallet)])}
+
+
+                                    ]
+    [ui/paper {:style { :display "inline-block" :float "left" :margin-right 50 }}
+
+      [ui/list
+      [ui/list-item {:primaryText "Все" :left-icon (ic/content-inbox)}]
+      [ui/list-item {:primaryText "Входящие" :left-icon (ic/content-mail)}]
+      [ui/list-item {:primaryText "Исходящие" :left-icon (ic/content-send)}]
+      [ui/list-item {:primaryText "Черновики" :left-icon (ic/content-drafts)}]
+      [ui/list-item {:primaryText "Корзина" :left-icon (ic/content-delete-sweep)}]
+      ]
+
+    ]
+    [:div {:style {}}
+    [ui/table {:style {  }}
+      [ui/table-header
+        [ui/table-row
+          [ui/table-header-column "ID"] [ui/table-header-column "Name"] [ui/table-header-column "Status"]
+
+        ]
+
+      ]
+
+
+    ]]
+
+
+
+
+    [:div "Hello"]
+    [ui/mui-theme-provider
+     {:mui-theme (get-mui-theme {:palette {:text-color (color :blue200)}})}
+     [ui/raised-button {:label "Blue button"}]]
+    (ic/action-home {:color (color :grey600)})
+    [ui/raised-button {:label        "open window"
+                        :icon         (ic/social-group)
+                        :secondary true
+                        :on-touch-tap #(opendebug)}]
+
+
+    ]]
 
 
 
@@ -83,17 +188,7 @@
  )
 
 
-(defn home-page []
-  [:div [:h2 "Welcome to vko111177"]
 
-  [ui/mui-theme-provider
-   {:mui-theme (get-mui-theme {:palette {:text-color (color :blue200)
-                                          :primary1-color (color :deep-orange-a100)
-                                          :secondary1-color (color :blue200) }})}
-   [ui/raised-button {:label "Blue button" :secondary true} ]]
-
-   [:div [:a {:href "/about"} "go to about page"]]
-   [:div [:a {:href "/list"} "go to list page"]]])
 
 (defn about-page []
   [:div [:h2 "About vko1"]
@@ -140,6 +235,9 @@
 
 (defn mount-root []
   (reagent/render [current-page] (.getElementById js/document "app")))
+
+
+
 
 (defn init! []
   (accountant/configure-navigation!
