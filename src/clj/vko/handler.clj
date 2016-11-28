@@ -7,17 +7,16 @@
 
 (def mount-target
   [:div#app
-      [:h3 "ClojureScript has not been compiled!!!"]
-      [:p "please run "
-       [:b "lein figwheel"]
-       " in order to start the compiler"]])
+      [:h3 "Page loading!!!"]
+      [:p "please wait "]
+       ])
 
 (defn head []
  [:head
   [:meta {:charset "utf-8"}]
   [:meta {:name "viewport"
           :content "width=device-width, initial-scale=1"}]
-          (include-css 
+          (include-css
                           (if (env :dev) "css/site.css" "css/site.min.css"))
   ])
 
