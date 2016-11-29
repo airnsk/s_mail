@@ -9,7 +9,8 @@
               [secretary.core :as secretary :include-macros true]
               [accountant.core :as accountant]
               [cljs.core.async :refer (chan put! <!)]
-              [vko.util :as util] ))
+              [vko.util :as util]
+              ))
 
 
 (comment (
@@ -143,3 +144,5 @@
        (secretary/locate-route path))})
   (accountant/dispatch-current!)
   (mount-root))
+
+(add-data :data-key userauth)
