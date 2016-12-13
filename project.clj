@@ -6,6 +6,7 @@
 
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [ring-server "0.4.0"]
+
                  [cljs-react-material-ui "0.2.30"]
                  [reagent "0.6.0" :exclusions [cljsjs/react]]
                  [reagent-forms "0.5.25"]
@@ -14,14 +15,15 @@
                  [ring/ring-defaults "0.2.1"]
                  [compojure "1.5.1"]
                  [hiccup "1.0.5"]
-                 [re-frisk "0.3.0"]
+
                  [cljsjs/material "1.2.1-0"]
                  [yogthos/config "0.8"]
                  [org.clojure/clojurescript "1.9.229"
                   :scope "provided"]
                  [secretary "1.2.3"]
                  [venantius/accountant "0.1.7"
-                  :exclusions [org.clojure/tools.reader]]]
+                  :exclusions [org.clojure/tools.reader]]
+                   ]
 
   :plugins [[lein-environ "1.0.2"]
             [lein-cljsbuild "1.1.1"]

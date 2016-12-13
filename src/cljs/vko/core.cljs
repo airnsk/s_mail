@@ -10,33 +10,16 @@
               [accountant.core :as accountant]
               [cljs.core.async :refer (chan put! <!)]
               [vko.util :as util]
+              [vko.table :as vkotable]
               ))
 
 
-(comment (
-
-  primary1Color cyan500,
-  primary2Color cyan700,
-  primary3Color grey400,
-  accent1Color pinkA200,
-  accent2Color grey100,
-  accent3Color grey500,
-  textColor darkBlack,
-  secondaryTextColor fade(darkBlack, 0.54),
-  alternateTextColor white,
-  canvasColor white,
-  borderColor grey300,
-  disabledColor fade(darkBlack, 0.3),
-  pickerHeaderColor cyan500,
-  clockCircleColor fade(darkBlack, 0.07),
-  shadowColor fullBlack)
-
-  )
 
 
 (def userauth (atom true))
 
 (defn template-page []
+
   [:div
   [ui/mui-theme-provider
    {:mui-theme (get-mui-theme
@@ -59,11 +42,7 @@
       ]
     ]
     [:div {:style {}}
-    [ui/table {:style {  }}
-      [ui/table-header
-        [ui/table-row
-          [ui/table-header-column "ID"] [ui/table-header-column "Name"] [ui/table-header-column "Status"]
-        ]]]]
+    vkotable/vtable                ]
     [:div "Hello"]
     [ui/mui-theme-provider
      {:mui-theme (get-mui-theme {:palette {:text-color (color :blue200)}})}
@@ -71,7 +50,7 @@
     (ic/action-home {:color (color :grey600)})
     [ui/raised-button {:label        "Click me"
                         :icon         (ic/social-group)
-                        :secondary true
+                        :secondary fale
                         :on-touch-tap #(println "clicked")}]]]])
 
 (defn login-page []
@@ -89,7 +68,8 @@
    {:mui-theme (get-mui-theme {:palette {:text-color (color :blue200)
                                           :primary1-color (color :deep-orange-a100)
                                           :secondary1-color (color :blue200) }})}
-   [ui/raised-button {:label "Blue button" :secondary true} ]]
+   [ui/raised-button {:label "Blue button" :secondary true
+                      :on-touch-tap #(reset! userauth true)} ]]
    [:div [:a {:href "/about"} "go to about page"]]
    [:div [:a {:href "/list"} "go to list page"]]])
 
@@ -113,6 +93,8 @@
 ;; -------------------------
 ;; Routes
 
+
+
 (secretary/defroute "/" []
   (session/put! :current-page #'home-page))
 
@@ -132,6 +114,7 @@
 ;; Initialize app
 
 (defn mount-root []
+
   (reagent/render [current-page] (.getElementById js/document "app")))
 
 (defn init! []
@@ -144,5 +127,4 @@
        (secretary/locate-route path))})
   (accountant/dispatch-current!)
   (mount-root))
-
-(add-data :data-key userauth)
+(js/console.log (str @userauth))
